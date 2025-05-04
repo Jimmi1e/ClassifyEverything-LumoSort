@@ -1,5 +1,8 @@
 # 🌟 LumoSort — A Smart Image Classifier with CLIP + PyQt6
+## 🎬 Background
 
+I'm an amateur photographer and a Master's student in Electrical & Computer Engineering at **Concordia University**. In my daily photography, I rarely sort my photos into categories, which led to thousands of disorganized images. 📷🗂️ To solve this, I developed LumoSort, an application that can automatically organize my photo library by semantic categories.
+## ✨ Preface
 **LumoSort** is a desktop application that helps you automatically classify and organize your photo collections into semantic categories such as *Portrait*, *Street*, *Architecture*, *Food*, and more.
 
 Built with **OpenAI CLIP** and **PyQt6**, it features a modern animated UI, multilingual support, and local image classification.
@@ -89,12 +92,17 @@ Ensure `sys._MEIPASS` is handled properly when accessing resources inside your c
 
 ---
 
-## 📚 License
-
-MIT License
-
----
-
 ## 👤 Author
 
 Created by Jiaxi Yang
+
+## 📄 License & Attribution
+
+This project is released under the MIT License.
+
+If you use LumoSort or its components (UI, classifier design, or visuals) as part of a derivative work, **please include a visible attribution** such as:
+
+> "Based on [LumoSort](https://github.com/Jimmi1e/LumoSort) by @Jimmi1e"
+
+This helps support the original author and gives proper credit. Thank you!
+
