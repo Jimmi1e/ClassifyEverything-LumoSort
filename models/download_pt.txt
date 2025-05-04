@@ -1,0 +1,1 @@
+https://openaipublic.blob.core.windows.net/clip/models/ViT-B-32.pt
