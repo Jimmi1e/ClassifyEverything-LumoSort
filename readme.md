@@ -1,8 +1,8 @@
-# 🌟 LumoSort — A Semantic-Aware Photo Organizer for Creators
+# 🌟 ClassifyEverything-LumoSort — A Universal Visual Classification Tool
 
 <div align="center">
   <p>
-    <a href="https://github.com/Jimmi1e/LumoSort/releases">
+    <a href="https://github.com/Jimmi1e/ClassifyEverything-LumoSort/releases">
       <img src="https://img.shields.io/badge/version-1.1.0-blue.svg" alt="version"/>
     </a>
     <a href="LICENSE">
@@ -16,7 +16,9 @@
 
 ## 🎬 Background
 
-I'm an amateur photographer and a Master's student in Electrical & Computer Engineering at **Concordia University**. In my daily photography, I rarely sort my photos into categories, which led to thousands of disorganized images. 📷🗂️ To solve this, I developed LumoSort, an application that can automatically organize my photo library by semantic categories.
+I'm an amateur photographer and a Master's student in Electrical & Computer Engineering at **Concordia University**. Initially developed for organizing my photo library, LumoSort has evolved into a powerful universal visual classification tool. Thanks to the robust CLIP model, it can classify not just photos, but virtually any visual content into semantic categories. 🎯✨
+
+Whether you're dealing with photographs, artwork, scientific images, or any other visual data, LumoSort can help you organize them intelligently. The system is highly adaptable - simply modify the categories in `labels.py` to suit your specific classification needs!
 
 ## 🌈 Versatility - Beyond Photography
 
