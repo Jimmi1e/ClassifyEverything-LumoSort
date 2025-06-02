@@ -975,7 +975,7 @@ class LoadingScreen(QWidget):
         super().__init__()
         self.setWindowFlags(Qt.WindowType.FramelessWindowHint | Qt.WindowType.WindowStaysOnTopHint)
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
-        self.resize(400, 300)  # 缩小加载窗口的大小
+        self.resize(500, 400)  # 增加窗口大小
         self.setup_ui()
 
     def setup_ui(self):
@@ -997,14 +997,14 @@ class LoadingScreen(QWidget):
         icon_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
         
         icon_label = QLabel()
-        icon_path = os.path.join(os.path.dirname(__file__), "icon", "logo.ico")
+        icon_path = os.path.join(os.path.dirname(__file__), "icon", "logo.png")
         if os.path.exists(icon_path):
             pixmap = QPixmap(icon_path)
-            scaled_pixmap = pixmap.scaled(96, 96,  # 缩小图标大小
+            scaled_pixmap = pixmap.scaled(200, 200,  # 增加图标大小
                                         Qt.AspectRatioMode.KeepAspectRatio, 
                                         Qt.TransformationMode.SmoothTransformation)
             icon_label.setPixmap(scaled_pixmap)
-            icon_label.setFixedSize(96, 96)  # 缩小图标容器大小
+            icon_label.setFixedSize(200, 200)  # 增加图标容器大小
         
         icon_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         icon_layout.addWidget(icon_label)
@@ -1020,9 +1020,9 @@ class LoadingScreen(QWidget):
         content_layout.addWidget(icon_container)
 
         # 加载文本
-        self.loading_label = QLabel("正在初始化...")
+        self.loading_label = QLabel("Preparing the magic...")
         self.loading_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.loading_label.setStyleSheet("color: #333333; font-size: 16px; margin: 10px; font-family: Microsoft YaHei")
+        self.loading_label.setStyleSheet("color: #333333; font-size: 24px; margin: 15px; font-family: Microsoft YaHei; font-weight: 500;")
         content_layout.addWidget(self.loading_label)
 
         # 进度条
@@ -1085,17 +1085,17 @@ class ModelLoadThread(QThread):
 
     def run(self):
         try:
-            self.status_update.emit("正在初始化...")
+            self.status_update.emit("Preparing the magic...")
             import Classifierpy
             success = Classifierpy.initialize_model(self.status_update.emit)
             if not success:
-                self.error_occurred.emit("模型初始化失败")
+                self.error_occurred.emit("The magic failed! Model initialization failed.")
                 self.finished.emit(False)
                 return
             self.finished.emit(True)
         except Exception as e:
             import traceback
-            error_msg = f"错误: {str(e)}\n{traceback.format_exc()}"
+            error_msg = f"Error: {str(e)}\n{traceback.format_exc()}"
             print(error_msg)  # 打印到控制台
             self.error_occurred.emit(error_msg)
             self.finished.emit(False)
@@ -1328,8 +1328,8 @@ class MainWindow(QMainWindow):
         self.loading_progress.setStyleSheet("QProgressBar {border: none; background: #E0E0E0; border-radius: 2px;} QProgressBar::chunk {background: #007AFF; border-radius: 2px;}")
         
         # 加载文本
-        self.loading_label = QLabel("正在加载分类...")
-        self.loading_label.setStyleSheet("color: #333333; font-size: 16px; margin-top: 15px;")
+        self.loading_label = QLabel("Preparing the magic...")
+        self.loading_label.setStyleSheet("color: #333333; font-size: 24px; margin: 15px; font-family: Microsoft YaHei; font-weight: 500;")
         
         loading_container_layout.addWidget(self.loading_progress)
         loading_container_layout.addWidget(self.loading_label)

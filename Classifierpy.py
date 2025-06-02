@@ -26,22 +26,22 @@ def initialize_model(status_callback=None):
     
     try:
         if status_callback:
-            status_callback("正在加载CLIP模型...")
+            status_callback("Summoning the CLIP model...")
             
         clip_model, preprocess_clip = clip.load("ViT-B/32", device="cpu", download_root=os.path.join(base_path, "models"))
         
         if status_callback:
-            status_callback("正在准备分类标签...")
+            status_callback("Preparing the magic labels...")
             
         text_tokens = clip.tokenize(CLIP_LABELS).to("cpu")
         
         if status_callback:
-            status_callback("模型加载完成")
+            status_callback("The magic is ready!")
             
         return True
     except Exception as e:
         if status_callback:
-            status_callback(f"错误: {str(e)}")
+            status_callback(f"Error: {str(e)}")
         return False
 
 # Image classification using CLIP
