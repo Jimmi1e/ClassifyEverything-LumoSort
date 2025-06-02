@@ -18,24 +18,26 @@
 
 I'm an amateur photographer and a Master's student in Electrical & Computer Engineering at **Concordia University**. In my daily photography, I rarely sort my photos into categories, which led to thousands of disorganized images. 📷🗂️ To solve this, I developed LumoSort, an application that can automatically organize my photo library by semantic categories.
 
-## 🔗 Download
+## 🔗 Download (for Windows)
 
-To support users in different regions, here are alternative download mirrors for the `LumoSort.exe` executable (
-ℹ️ Note: The macOS version of LumoSort is currently under development and will be released soon.):
+To support users in different regions, here are alternative download mirrors for the `LumoSort.exe` executable :
 
 ### 🌍 Google Drive(For Overseas Users)
 
 If you're located overseas, you can use this Google Drive link to download the executable:
 
-- [Google Drive: LumoSort.exe](https://drive.google.com/file/d/1Q1PDmydGXdkGiz8DSuEFRh-kS-JLrbTx/view?usp=drive_link)
+- [Google Drive: LumoSort.exe](https://drive.google.com/file/d/13ZbmWGuOfmzuGjPRudxjpWBjcVkYpWOd/view?usp=sharing)
 
 ### ☁️ Baidu NetDisk (For Mainland China Users)
 
 If you're based in mainland China, please use the Baidu NetDisk link below:
 
-- [Baidu NetDisk: LumoSort.exe](https://pan.baidu.com/s/1t4fvGvutQemTQ0fstptRtw?pwd=6qym)  
-  提取码：`6qym`
+- [Baidu NetDisk: LumoSort.exe](https://pan.baidu.com/s/1_BsGWZ860G74Asrspy6lkg?pwd=Lumo)  
+  提取码：`Lumo`
 
+## 🔗 Download (for Mac OS)
+(
+ℹ️ Note: The macOS version of LumoSort is currently under development and will be released soon.)
 ## ✨ Features
 
 **LumoSort** is a desktop application that helps you automatically classify and organize your photo collections into semantic categories such as *Portrait*, *Street*, *Architecture*, *Food*, and more.
@@ -51,13 +53,13 @@ Built with **OpenAI CLIP** and **PyQt6**, it features:
 ### 📸 Screenshots
 
 <div align="center">
-  <img src="icon/screen3.png" alt="Main Interface" width="800"/>
+  <img src="icon/screen1.png" alt="Main Interface" width="800"/>
   <p><em>Main Interface - Dark Mode</em></p>
   
-  <img src="icon/screen1.png" alt="Category View" width="800"/>
+  <img src="icon/screen2.png" alt="Category View" width="800"/>
   <p><em>Category View with Image Classification</em></p>
   
-  <img src="icon/screen2.png" alt="Tools Interface" width="800"/>
+  <img src="icon/screen3.png" alt="Tools Interface" width="800"/>
   <p><em>Tools Interface - Background Processing</em></p>
 </div>
 
