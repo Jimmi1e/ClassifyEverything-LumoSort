@@ -659,13 +659,8 @@ class MainWindow(QMainWindow):
         self.cat_list.setResizeMode(QListWidget.ResizeMode.Adjust)
         self.cat_list.setUniformItemSizes(True)
         self.cat_list.setWordWrap(True)
-<<<<<<< HEAD
         self.cat_list.setSpacing(15)
         self.cat_list.setIconSize(QSize(159, 159))
-=======
-        self.cat_list.setSpacing(20)
-        self.cat_list.setIconSize(QSize(199, 199))
->>>>>>> 20b991bb3f65c3c8ee34f4223f8ca3aff5aa1bd1
         self.cat_list.itemClicked.connect(self.open_preview)
         cp_layout.addWidget(self.cat_list)
         self.classifier_widget.addWidget(self.cat_page)
@@ -745,11 +740,7 @@ class MainWindow(QMainWindow):
         self.category_images_list.setResizeMode(QListWidget.ResizeMode.Adjust)
         self.category_images_list.setUniformItemSizes(True)
         self.category_images_list.setIconSize(QSize(150, 150))
-<<<<<<< HEAD
         self.category_images_list.setSpacing(8)
-=======
-        self.category_images_list.setSpacing(10)
->>>>>>> 20b991bb3f65c3c8ee34f4223f8ca3aff5aa1bd1
         self.category_images_list.itemClicked.connect(self.show_full_preview)
         category_preview_layout.addWidget(self.category_images_list)
         
@@ -929,11 +920,7 @@ class MainWindow(QMainWindow):
                 continue
             has_any_images = True
             cover = imgs[0]
-<<<<<<< HEAD
             icon = self._make_circle(cover, 159)
-=======
-            icon = self._make_circle(cover, 199)
->>>>>>> 20b991bb3f65c3c8ee34f4223f8ca3aff5aa1bd1
             self.categories[sub] = imgs
             item = QListWidgetItem(QIcon(icon), sub)
             item.setData(Qt.ItemDataRole.UserRole, sub)
