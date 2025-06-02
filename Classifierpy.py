@@ -3,25 +3,56 @@ import sys
 import shutil
 from PIL import Image
 import torch
-from clip import clip
-from labels import CLIP_LABELS, LABEL_DISPLAY
 import clip.simple_tokenizer as st
 
 if getattr(sys, 'frozen', False):
     base_path = sys._MEIPASS
 else:
     base_path = os.path.dirname(__file__)
-st.BPE_PATH = os.path.join(os.path.dirname(__file__), "clip_vocab", "bpe_simple_vocab_16e6.txt.gz")
-# Load model
-# clip_model, preprocess_clip = clip.load("ViT-B/32", device="cpu")
-# clip_model, preprocess_clip = clip.load("ViT-B/32", device="cpu", download_root="./models")
-clip_model, preprocess_clip = clip.load("ViT-B/32", device="cpu", download_root=os.path.join(base_path, "models"))
-text_tokens = clip.tokenize(CLIP_LABELS).to("cpu")
+
+st.BPE_PATH = os.path.join(base_path, "clip_vocab", "bpe_simple_vocab_16e6.txt.gz")
+
+from clip import clip
+from labels import CLIP_LABELS, LABEL_DISPLAY
+
+# 全局变量
+clip_model = None
+preprocess_clip = None
+text_tokens = None
+
+def initialize_model(status_callback=None):
+    """初始化模型，返回是否成功"""
+    global clip_model, preprocess_clip, text_tokens
+    
+    try:
+        if status_callback:
+            status_callback("正在加载CLIP模型...")
+            
+        clip_model, preprocess_clip = clip.load("ViT-B/32", device="cpu", download_root=os.path.join(base_path, "models"))
+        
+        if status_callback:
+            status_callback("正在准备分类标签...")
+            
+        text_tokens = clip.tokenize(CLIP_LABELS).to("cpu")
+        
+        if status_callback:
+            status_callback("模型加载完成")
+            
+        return True
+    except Exception as e:
+        if status_callback:
+            status_callback(f"错误: {str(e)}")
+        return False
 
 # Image classification using CLIP
 def classify_images_by_clip(paths, output_dir, progress_callback=None):
+    global clip_model, preprocess_clip, text_tokens
+    
+    if clip_model is None or preprocess_clip is None or text_tokens is None:
+        raise RuntimeError("模型未初始化，请先调用initialize_model()")
+        
     os.makedirs(output_dir, exist_ok=True)
-    results ={}
+    results = {}
     low_conf_log = []
 
     for idx, path in enumerate(paths):
@@ -51,7 +82,7 @@ def classify_images_by_clip(paths, output_dir, progress_callback=None):
 
         if progress_callback:
             progress_callback(int((idx + 1) / len(paths) * 100))
-    #I have to say low_conf means the picture may not belong to this category!!!
+
     if low_conf_log:
         with open(os.path.join(output_dir, "low_confidence.txt"), "w", encoding="utf-8") as f:
             f.write("File Name\tCategory\tConfidence\n")

@@ -294,33 +294,46 @@ def add_border(image_path, output_path, background_kind=''):
     
     new_image.save(output_path,dpi=(240,240), lossless=True)
 
-def process_images(input_folder, output_folder, background='4', progress_callback=None, log_callback=None):
-    '''
+# 背景类型定义
+background_kind = {
+    1: 'dominant_color',
+    2: 'dominant_color_circle',
+    3: 'blured',
+    4: 'white',
+    5: 'parameter'
+}
+
+# 背景类型显示名称
+background_display_names = {
+    1: "主色调背景",
+    2: "主色调圆形背景",
+    3: "模糊背景",
+    4: "纯白背景",
+    5: "自定义参数"
+}
+
+def process_images(input_folder, output_folder, background=1, progress_callback=None, log_callback=None):
+    """
+    处理图片，添加背景
     :param input_folder: 输入文件夹路径
     :param output_folder: 输出文件夹路径
-    :param background: 背景类型，1:dominant_color,2:dominant_color_circle,3:blured,4:white,5:parameter
+    :param background: 背景类型（1-5）
     :param progress_callback: 进度回调函数
     :param log_callback: 日志回调函数
-    :return:
-    '''
+    """
+    if log_callback:
+        log_callback("开始处理图片...")
+        log_callback(f"输入文件夹: {input_folder}")
+        log_callback(f"输出文件夹: {output_folder}")
+        
+    # 验证背景类型
+    if background not in background_kind:
+        raise ValueError(f"无效的背景类型: {background}，可用的背景类型为: {list(background_kind.keys())}")
+        
+    if log_callback:
+        log_callback(f"背景类型: {background_display_names[background]}")
+    
     try:
-        background_kind={'1':'dominant_color',
-                        '2':'dominant_color_circle',
-                        '3':'blured',
-                        '4':'white',
-                        '5':'parameter'}
-        
-        if log_callback:
-            log_callback("开始处理图片...")
-            log_callback(f"输入文件夹: {input_folder}")
-            log_callback(f"输出文件夹: {output_folder}")
-            log_callback(f"背景类型: {background_kind[background]}")
-        else:
-            print(f"开始处理图片...")
-            print(f"输入文件夹: {input_folder}")
-            print(f"输出文件夹: {output_folder}")
-            print(f"背景类型: {background_kind[background]}")
-        
         star_time=time.time()
         if not os.path.exists(output_folder):
             os.makedirs(output_folder)
@@ -352,6 +365,7 @@ def process_images(input_folder, output_folder, background='4', progress_callbac
                 else:
                     print(f"\n处理图片 {i+1}/{total_images}: {filename}")
                 
+                # 使用实际的背景类型值
                 add_border(input_path, output_path, background_kind=background_kind[background])
                           
                 if progress_callback:

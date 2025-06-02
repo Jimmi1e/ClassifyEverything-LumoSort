@@ -14,7 +14,8 @@ from PyQt6.QtWidgets import (
 from PyQt6.QtGui import QIcon, QPixmap, QPainter, QBrush, QColor, QPalette, QFont, QWindow
 from PyQt6.QtCore import Qt, QThread, pyqtSignal, QSize, QTimer, QObject
 
-import Classifierpy as Classifier
+# 移除直接导入
+# import Classifierpy as Classifier
 
 class ScaledPreview(QLabel):
     def __init__(self):
@@ -43,39 +44,360 @@ class ScaledPreview(QLabel):
 from labels import LABEL_DISPLAY
 TEXTS = {
     'en': {
-        'welcome': 'Welcome to LumoSort!', 'upload': 'Upload Images', 'dark': 'Dark Mode', 'light': 'Light Mode', 'back': '← Back', 'ready': 'Ready', 'classifying': 'Classifying...', 'completed': '{} categories loaded', 'loading': 'Loading... {}/{} ETA: {}s'
+        'welcome': 'Welcome to LumoSort!',
+        'upload': 'Upload Images',
+        'dark': 'Dark Mode',
+        'light': 'Light Mode',
+        'back': '← Back',
+        'ready': 'Ready',
+        'classifying': 'Classifying...',
+        'completed': '{} categories loaded',
+        'loading': 'Loading... {}/{} ETA: {}s',
+        'home': 'Home',
+        'tools': 'Tools',
+        'classified': 'Classified',
+        'loading_categories': 'Loading categories...',
+        'no_images': 'No classified images',
+        'no_images_desc': 'Please upload and classify images first.',
+        'processing': 'Processing Images',
+        'input_folder': 'Input Folder',
+        'output_folder': 'Output Folder',
+        'browse': 'Browse',
+        'background_style': 'Background Style',
+        'processing_log': 'Processing Log',
+        'process_images': 'Process Images',
+        'select_input': 'Select Input Folder',
+        'select_output': 'Select Output Folder',
+        'error': 'Error',
+        'select_folders': 'Please select both input and output folders.',
+        'bg_styles': [
+            '1. Main Color Background',
+            '2. Main Color Circle',
+            '3. Blur Background',
+            '4. White Background',
+            '5. Custom Parameters'
+        ]
     },
     'zh': {
-        'welcome': '欢迎使用 LumoSort！', 'upload': '上传图片', 'dark': '夜间模式', 'light': '日间模式', 'back': '← 返回', 'ready': '就绪', 'classifying': '正在分类...', 'completed': '已加载 {} 个类别', 'loading': '加载中... {}/{} 剩余约 {} 秒'
+        'welcome': '欢迎使用 LumoSort！',
+        'upload': '上传图片',
+        'dark': '夜间模式',
+        'light': '日间模式',
+        'back': '← 返回',
+        'ready': '就绪',
+        'classifying': '正在分类...',
+        'completed': '已加载 {} 个类别',
+        'loading': '加载中... {}/{} 剩余约 {} 秒',
+        'home': '主页',
+        'tools': '工具',
+        'classified': '已分类',
+        'loading_categories': '正在加载分类...',
+        'no_images': '暂无分类图片',
+        'no_images_desc': '请先上传并分类图片。',
+        'processing': '图片处理',
+        'input_folder': '输入文件夹',
+        'output_folder': '输出文件夹',
+        'browse': '浏览',
+        'background_style': '背景样式',
+        'processing_log': '处理日志',
+        'process_images': '处理图片',
+        'select_input': '选择输入文件夹',
+        'select_output': '选择输出文件夹',
+        'error': '错误',
+        'select_folders': '请选择输入和输出文件夹。',
+        'bg_styles': [
+            '1. 主色调背景',
+            '2. 主色调圆形背景',
+            '3. 模糊背景',
+            '4. 纯白背景',
+            '5. 自定义参数'
+        ]
     },
     'zh-tw': {
-        'welcome': '歡迎使用 LumoSort！', 'upload': '上傳圖片', 'dark': '夜間模式', 'light': '日間模式', 'back': '← 返回', 'ready': '就緒', 'classifying': '正在分類...', 'completed': '已載入 {} 個類別', 'loading': '載入中... {}/{} 剩餘約 {} 秒'
+        'welcome': '歡迎使用 LumoSort！',
+        'upload': '上傳圖片',
+        'dark': '夜間模式',
+        'light': '日間模式',
+        'back': '← 返回',
+        'ready': '就緒',
+        'classifying': '正在分類...',
+        'completed': '已載入 {} 個類別',
+        'loading': '載入中... {}/{} 剩餘約 {} 秒',
+        'home': '主頁',
+        'tools': '工具',
+        'classified': '已分類',
+        'loading_categories': '正在載入分類...',
+        'no_images': '暫無分類圖片',
+        'no_images_desc': '請先上傳並分類圖片。',
+        'processing': '圖片處理',
+        'input_folder': '輸入資料夾',
+        'output_folder': '輸出資料夾',
+        'browse': '瀏覽',
+        'background_style': '背景樣式',
+        'processing_log': '處理日誌',
+        'process_images': '處理圖片',
+        'select_input': '選擇輸入資料夾',
+        'select_output': '選擇輸出資料夾',
+        'error': '錯誤',
+        'select_folders': '請選擇輸入和輸出資料夾。',
+        'bg_styles': [
+            '1. 主色調背景',
+            '2. 主色調圓形背景',
+            '3. 模糊背景',
+            '4. 純白背景',
+            '5. 自定義參數'
+        ]
     },
     'ja': {
-        'welcome': 'LumoSort へようこそ！', 'upload': '画像を選択', 'dark': 'ダークモード', 'light': 'ライトモード', 'back': '← 戻る', 'ready': '準備完了', 'classifying': '分類中...', 'completed': '{} カテゴリを読み込み済み', 'loading': '読み込み中... {}/{} 残り約 {} 秒'
+        'welcome': 'LumoSort へようこそ！',
+        'upload': '画像をアップロード',
+        'dark': 'ダークモード',
+        'light': 'ライトモード',
+        'back': '← 戻る',
+        'ready': '準備完了',
+        'classifying': '分類中...',
+        'completed': '{} カテゴリを読み込み済み',
+        'loading': '読み込み中... {}/{} 残り約 {} 秒',
+        'home': 'ホーム',
+        'tools': 'ツール',
+        'classified': '分類済み',
+        'loading_categories': 'カテゴリを読み込み中...',
+        'no_images': '分類された画像がありません',
+        'no_images_desc': '画像をアップロードして分類してください。',
+        'processing': '画像処理',
+        'input_folder': '入力フォルダ',
+        'output_folder': '出力フォルダ',
+        'browse': '参照',
+        'background_style': '背景スタイル',
+        'processing_log': '処理ログ',
+        'process_images': '画像を処理',
+        'select_input': '入力フォルダを選択',
+        'select_output': '出力フォルダを選択',
+        'error': 'エラー',
+        'select_folders': '入力フォルダと出力フォルダを選択してください。',
+        'bg_styles': [
+            '1. メインカラー背景',
+            '2. メインカラー円形',
+            '3. ぼかし背景',
+            '4. 白背景',
+            '5. カスタムパラメータ'
+        ]
     },
     'fr': {
-        'welcome': 'Bienvenue sur LumoSort !', 'upload': 'Importer des images', 'dark': 'Mode sombre', 'light': 'Mode clair', 'back': '← Retour', 'ready': 'Prêt', 'classifying': 'Classification en cours...', 'completed': '{} catégories chargées', 'loading': 'Chargement... {}/{} estimé {}s'
+        'welcome': 'Bienvenue sur LumoSort !',
+        'upload': 'Importer',
+        'dark': 'Mode sombre',
+        'light': 'Mode clair',
+        'back': '← Retour',
+        'ready': 'Prêt',
+        'classifying': 'Classification en cours...',
+        'completed': '{} catégories chargées',
+        'loading': 'Chargement... {}/{} estimé {}s',
+        'home': 'Accueil',
+        'tools': 'Outils',
+        'classified': 'Classées',
+        'loading_categories': 'Chargement des catégories...',
+        'no_images': 'Aucune image classée',
+        'no_images_desc': 'Veuillez importer et classer des images.',
+        'processing': 'Traitement des images',
+        'input_folder': 'Dossier source',
+        'output_folder': 'Dossier destination',
+        'browse': 'Parcourir',
+        'background_style': 'Style d\'arrière-plan',
+        'processing_log': 'Journal de traitement',
+        'process_images': 'Traiter les images',
+        'select_input': 'Sélectionner le dossier source',
+        'select_output': 'Sélectionner le dossier destination',
+        'error': 'Erreur',
+        'select_folders': 'Veuillez sélectionner les dossiers source et destination.',
+        'bg_styles': [
+            '1. Couleur principale',
+            '2. Cercle couleur principale',
+            '3. Arrière-plan flou',
+            '4. Arrière-plan blanc',
+            '5. Paramètres personnalisés'
+        ]
     },
     'ko': {
-        'welcome': 'LumoSort에 오신 것을 환영합니다!', 'upload': '이미지 업로드', 'dark': '다크 모드', 'light': '라이트 모드', 'back': '← 뒤로', 'ready': '준비 완료', 'classifying': '분류 중...', 'completed': '{}개 카테고리 로드됨', 'loading': '로드 중... {}/{} 남은 시간 {}초'
+        'welcome': 'LumoSort에 오신 것을 환영합니다!',
+        'upload': '이미지 업로드',
+        'dark': '다크 모드',
+        'light': '라이트 모드',
+        'back': '← 뒤로',
+        'ready': '준비 완료',
+        'classifying': '분류 중...',
+        'completed': '{}개 카테고리 로드됨',
+        'loading': '로드 중... {}/{} 남은 시간 {}초',
+        'home': '홈',
+        'tools': '도구',
+        'classified': '분류됨',
+        'loading_categories': '카테고리 로드 중...',
+        'no_images': '분류된 이미지 없음',
+        'no_images_desc': '이미지를 업로드하고 분류해 주세요.',
+        'processing': '이미지 처리',
+        'input_folder': '입력 폴더',
+        'output_folder': '출력 폴더',
+        'browse': '찾아보기',
+        'background_style': '배경 스타일',
+        'processing_log': '처리 로그',
+        'process_images': '이미지 처리',
+        'select_input': '입력 폴더 선택',
+        'select_output': '출력 폴더 선택',
+        'error': '오류',
+        'select_folders': '입력 폴더와 출력 폴더를 선택해 주세요.',
+        'bg_styles': [
+            '1. 메인 컬러 배경',
+            '2. 메인 컬러 원형',
+            '3. 블러 배경',
+            '4. 흰색 배경',
+            '5. 사용자 정의 매개변수'
+        ]
     },
     'ru': {
-        'welcome': 'Добро пожаловать в LumoSort!', 'upload': 'Загрузить изображения', 'dark': 'Темная тема', 'light': 'Светлая тема', 'back': '← Назад', 'ready': 'Готово', 'classifying': 'Классификация...', 'completed': 'Загружено категорий: {}', 'loading': 'Загрузка... {}/{} осталось ~{} сек'
+        'welcome': 'Добро пожаловать в LumoSort!',
+        'upload': 'Загрузить изображения',
+        'dark': 'Темная тема',
+        'light': 'Светлая тема',
+        'back': '← Назад',
+        'ready': 'Готово',
+        'classifying': 'Классификация...',
+        'completed': 'Загружено категорий: {}',
+        'loading': 'Загрузка... {}/{} осталось ~{} сек',
+        'home': 'Главная',
+        'tools': 'Инструменты',
+        'classified': 'Классифицировано',
+        'loading_categories': 'Загрузка категорий...',
+        'no_images': 'Нет классифицированных изображений',
+        'no_images_desc': 'Загрузите и классифицируйте изображения.',
+        'processing': 'Обработка изображений',
+        'input_folder': 'Исходная папка',
+        'output_folder': 'Папка назначения',
+        'browse': 'Обзор',
+        'background_style': 'Стиль фона',
+        'processing_log': 'Журнал обработки',
+        'process_images': 'Обработать изображения',
+        'select_input': 'Выберите исходную папку',
+        'select_output': 'Выберите папку назначения',
+        'error': 'Ошибка',
+        'select_folders': 'Выберите исходную папку и папку назначения.',
+        'bg_styles': [
+            '1. Основной цвет фона',
+            '2. Круг основного цвета',
+            '3. Размытый фон',
+            '4. Белый фон',
+            '5. Пользовательские параметры'
+        ]
     },
     'ar': {
-        'welcome': 'مرحبًا بك في LumoSort!', 'upload': 'تحميل الصور', 'dark': 'الوضع الليلي', 'light': 'الوضع النهاري', 'back': '← رجوع', 'ready': 'جاهز', 'classifying': 'جارٍ التصنيف...', 'completed': '{} فئة تم تحميلها', 'loading': 'جارٍ التحميل... {}/{} المتبقي: {} ث'
+        'welcome': 'مرحبًا بك في LumoSort!',
+        'upload': 'تحميل الصور',
+        'dark': 'الوضع الليلي',
+        'light': 'الوضع النهاري',
+        'back': '← رجوع',
+        'ready': 'جاهز',
+        'classifying': 'جارٍ التصنيف...',
+        'completed': '{} فئة تم تحميلها',
+        'loading': 'جارٍ التحميل... {}/{} المتبقي: {} ث',
+        'home': 'الرئيسية',
+        'tools': 'الأدوات',
+        'classified': 'مصنفة',
+        'loading_categories': 'جارٍ تحميل الفئات...',
+        'no_images': 'لا توجد صور مصنفة',
+        'no_images_desc': 'يرجى تحميل وتصنيف الصور أولاً.',
+        'processing': 'معالجة الصور',
+        'input_folder': 'مجلد الإدخال',
+        'output_folder': 'مجلد الإخراج',
+        'browse': 'تصفح',
+        'background_style': 'نمط الخلفية',
+        'processing_log': 'سجل المعالجة',
+        'process_images': 'معالجة الصور',
+        'select_input': 'اختر مجلد الإدخال',
+        'select_output': 'اختر مجلد الإخراج',
+        'error': 'خطأ',
+        'select_folders': 'يرجى اختيار مجلدي الإدخال والإخراج.',
+        'bg_styles': [
+            '1. خلفية باللون الرئيسي',
+            '2. دائرة باللون الرئيسي',
+            '3. خلفية ضبابية',
+            '4. خلفية بيضاء',
+            '5. معلمات مخصصة'
+        ]
     },
     'es': {
-        'welcome': '¡Bienvenido a LumoSort!', 'upload': 'Subir imágenes', 'dark': 'Modo oscuro', 'light': 'Modo claro', 'back': '← Atrás', 'ready': 'Listo', 'classifying': 'Clasificando...', 'completed': '{} categorías cargadas', 'loading': 'Cargando... {}/{} ETA: {}s'
+        'welcome': '¡Bienvenido a LumoSort!',
+        'upload': 'Subir imágenes',
+        'dark': 'Modo oscuro',
+        'light': 'Modo claro',
+        'back': '← Atrás',
+        'ready': 'Listo',
+        'classifying': 'Clasificando...',
+        'completed': '{} categorías cargadas',
+        'loading': 'Cargando... {}/{} ETA: {}s',
+        'home': 'Inicio',
+        'tools': 'Herramientas',
+        'classified': 'Clasificadas',
+        'loading_categories': 'Cargando categorías...',
+        'no_images': 'No hay imágenes clasificadas',
+        'no_images_desc': 'Por favor, sube y clasifica imágenes primero.',
+        'processing': 'Procesando imágenes',
+        'input_folder': 'Carpeta de entrada',
+        'output_folder': 'Carpeta de salida',
+        'browse': 'Examinar',
+        'background_style': 'Estilo de fondo',
+        'processing_log': 'Registro de procesamiento',
+        'process_images': 'Procesar imágenes',
+        'select_input': 'Seleccionar carpeta de entrada',
+        'select_output': 'Seleccionar carpeta de salida',
+        'error': 'Error',
+        'select_folders': 'Por favor, selecciona las carpetas de entrada y salida.',
+        'bg_styles': [
+            '1. Fondo color principal',
+            '2. Círculo color principal',
+            '3. Fondo desenfocado',
+            '4. Fondo blanco',
+            '5. Parámetros personalizados'
+        ]
     },
     'de': {
-        'welcome': 'Willkommen bei LumoSort!', 'upload': 'Bilder hochladen', 'dark': 'Dunkelmodus', 'light': 'Hellmodus', 'back': '← Zurück', 'ready': 'Bereit', 'classifying': 'Klassifizierung...', 'completed': '{} Kategorien geladen', 'loading': 'Lädt... {}/{} verbleibend: {}s'
+        'welcome': 'Willkommen bei LumoSort!',
+        'upload': 'Bilder hochladen',
+        'dark': 'Dunkelmodus',
+        'light': 'Hellmodus',
+        'back': '← Zurück',
+        'ready': 'Bereit',
+        'classifying': 'Klassifizierung...',
+        'completed': '{} Kategorien geladen',
+        'loading': 'Lädt... {}/{} verbleibend: {}s',
+        'home': 'Start',
+        'tools': 'Werkzeuge',
+        'classified': 'Klassifiziert',
+        'loading_categories': 'Lade Kategorien...',
+        'no_images': 'Keine klassifizierten Bilder',
+        'no_images_desc': 'Bitte laden Sie zuerst Bilder hoch und klassifizieren Sie sie.',
+        'processing': 'Bildverarbeitung',
+        'input_folder': 'Eingabeordner',
+        'output_folder': 'Ausgabeordner',
+        'browse': 'Durchsuchen',
+        'background_style': 'Hintergrundstil',
+        'processing_log': 'Verarbeitungsprotokoll',
+        'process_images': 'Bilder verarbeiten',
+        'select_input': 'Eingabeordner auswählen',
+        'select_output': 'Ausgabeordner auswählen',
+        'error': 'Fehler',
+        'select_folders': 'Bitte wählen Sie Eingabe- und Ausgabeordner aus.',
+        'bg_styles': [
+            '1. Hauptfarbe Hintergrund',
+            '2. Hauptfarbe Kreis',
+            '3. Unscharfer Hintergrund',
+            '4. Weißer Hintergrund',
+            '5. Benutzerdefinierte Parameter'
+        ]
     }
 }
 
 class ClassifyThread(QThread):
     finished = pyqtSignal(object)
+    status_update = pyqtSignal(str)
 
     def __init__(self, paths):
         super().__init__()
@@ -83,11 +405,12 @@ class ClassifyThread(QThread):
 
     def run(self):
         try:
-            results = Classifier.classify_images_by_clip(self.paths, 'sorted')
+            import Classifierpy
+            self.status_update.emit("正在分类图片...")
+            results = Classifierpy.classify_images_by_clip(self.paths, 'sorted', progress_callback=None)
+            self.finished.emit(results)
         except Exception as e:
-            results = e
-        self.finished.emit(results)
-
+            self.finished.emit(e)
 
 class TypingLabel(QLabel):
     def __init__(self, text, interval=100):
@@ -131,6 +454,7 @@ class TypingLabel(QLabel):
 class ImageProcessingWidget(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
+        self.current_lang = 'zh'  # 默认使用中文
         self.setup_ui()
         
     def setup_ui(self):
@@ -141,7 +465,7 @@ class ImageProcessingWidget(QWidget):
         # 设置大小策略
         self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         
-        # 整体样式
+        # 设置样式表
         self.light_style = """
             QWidget {
                 background-color: #f5f5f7;
@@ -304,14 +628,15 @@ class ImageProcessingWidget(QWidget):
         """
         
         # Input Folder
-        input_group = QGroupBox("输入文件夹")
+        input_group = QGroupBox()
+        input_group.setObjectName("input_group")
         input_group.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
         input_layout = QHBoxLayout()
         input_layout.setSpacing(10)
         self.input_entry = QLineEdit()
         self.input_entry.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
-        self.input_entry.setPlaceholderText("选择包含图片的文件夹...")
-        input_browse = QPushButton("浏览")
+        self.input_entry.setPlaceholderText(TEXTS['zh']['select_input'])  # 默认中文，后续会更新
+        input_browse = QPushButton()
         input_browse.setFixedWidth(60)
         input_browse.clicked.connect(self.choose_input_folder)
         input_layout.addWidget(self.input_entry)
@@ -320,14 +645,15 @@ class ImageProcessingWidget(QWidget):
         layout.addWidget(input_group)
         
         # Output Folder
-        output_group = QGroupBox("输出文件夹")
+        output_group = QGroupBox()
+        output_group.setObjectName("output_group")
         output_group.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
         output_layout = QHBoxLayout()
         output_layout.setSpacing(10)
         self.output_entry = QLineEdit()
         self.output_entry.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
-        self.output_entry.setPlaceholderText("选择保存处理后图片的文件夹...")
-        output_browse = QPushButton("浏览")
+        self.output_entry.setPlaceholderText(TEXTS['zh']['select_output'])  # 默认中文，后续会更新
+        output_browse = QPushButton()
         output_browse.setFixedWidth(60)
         output_browse.clicked.connect(self.choose_output_folder)
         output_layout.addWidget(self.output_entry)
@@ -336,24 +662,20 @@ class ImageProcessingWidget(QWidget):
         layout.addWidget(output_group)
         
         # Background Type
-        bg_group = QGroupBox("背景样式")
+        bg_group = QGroupBox()
+        bg_group.setObjectName("bg_group")
         bg_group.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
         bg_layout = QVBoxLayout()
         self.bg_combo = QComboBox()
         self.bg_combo.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
-        self.bg_combo.addItems([
-            "1. 主色调背景",
-            "2. 主色调圆形背景",
-            "3. 模糊背景",
-            "4. 纯白背景",
-            "5. 自定义参数"
-        ])
+        self.bg_combo.addItems(TEXTS['zh']['bg_styles'])  # 默认中文，后续会更新
         bg_layout.addWidget(self.bg_combo)
         bg_group.setLayout(bg_layout)
         layout.addWidget(bg_group)
         
         # Log Text
-        log_group = QGroupBox("处理日志")
+        log_group = QGroupBox()
+        log_group.setObjectName("log_group")
         log_group.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         log_layout = QVBoxLayout()
         self.log_text = QTextEdit()
@@ -372,7 +694,7 @@ class ImageProcessingWidget(QWidget):
         layout.addLayout(progress_layout)
         
         # Submit Button
-        self.submit_btn = QPushButton("处理图片")
+        self.submit_btn = QPushButton()
         self.submit_btn.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
         self.submit_btn.setStyleSheet("""
             QPushButton {
@@ -405,10 +727,117 @@ class ImageProcessingWidget(QWidget):
             shadow.setYOffset(2)
             shadow.setColor(QColor(0, 0, 0, 25))
             widget.setGraphicsEffect(shadow)
+        
+        # 初始化文本
+        self.update_texts('zh')  # 默认使用中文
             
         # 设置初始主题
         self.update_theme(QApplication.instance().palette().window().color().lightness() > 128)
+            
+    def update_texts(self, lang):
+        """更新界面文本"""
+        self.current_lang = lang  # 添加这行，保存当前语言
+        t = TEXTS[lang]
+        # 更新组标题
+        for group in self.findChildren(QGroupBox):
+            if group.objectName() == "input_group":
+                group.setTitle(t['input_folder'])
+            elif group.objectName() == "output_group":
+                group.setTitle(t['output_folder'])
+            elif group.objectName() == "bg_group":
+                group.setTitle(t['background_style'])
+            elif group.objectName() == "log_group":
+                group.setTitle(t['processing_log'])
         
+        # 更新输入框提示文本
+        self.input_entry.setPlaceholderText(t['select_input'])
+        self.output_entry.setPlaceholderText(t['select_output'])
+        
+        # 更新按钮文本
+        for btn in self.findChildren(QPushButton):
+            if btn == self.submit_btn:
+                btn.setText(t['process_images'])
+            else:
+                btn.setText(t['browse'])
+        
+        # 更新背景样式选项
+        current_index = self.bg_combo.currentIndex()
+        self.bg_combo.clear()
+        self.bg_combo.addItems(t['bg_styles'])
+        self.bg_combo.setCurrentIndex(current_index)
+            
+    def choose_input_folder(self):
+        folder = QFileDialog.getExistingDirectory(self, TEXTS[self.current_lang]['select_input'])
+        if folder:
+            self.input_entry.setText(folder)
+            
+    def choose_output_folder(self):
+        folder = QFileDialog.getExistingDirectory(self, TEXTS[self.current_lang]['select_output'])
+        if folder:
+            self.output_entry.setText(folder)
+            
+    def process_images(self):
+        """处理图片"""
+        input_folder = self.input_entry.text()
+        output_folder = self.output_entry.text()
+        
+        if not input_folder or not output_folder:
+            QMessageBox.warning(self, TEXTS[self.current_lang]['error'], 
+                              TEXTS[self.current_lang]['select_folders'])
+            return
+            
+        # 禁用按钮，避免重复点击
+        self.submit_btn.setEnabled(False)
+        
+        # 重置进度条
+        self.progress_bar.setValue(0)
+        self.progress_bar.setRange(0, 100)
+        
+        # 清空日志
+        self.log_text.clear()
+        
+        # 创建处理线程
+        self.processor = ImageProcessor(
+            input_folder,
+            output_folder,
+            self.bg_combo.currentIndex() + 1  # 背景类型从1开始
+        )
+        
+        # 连接信号
+        self.processor.progress.connect(self.update_progress)
+        self.processor.log.connect(self.update_log)
+        self.processor.finished.connect(self.on_processing_finished)
+        
+        # 创建线程并启动
+        self.process_thread = QThread()
+        self.processor.moveToThread(self.process_thread)
+        self.process_thread.started.connect(self.processor.run)
+        self.process_thread.start()
+        
+    def update_progress(self, value):
+        """更新进度条"""
+        self.progress_bar.setValue(value)
+        
+    def update_log(self, text):
+        """更新日志"""
+        self.log_text.append(text)
+        # 滚动到底部
+        self.log_text.verticalScrollBar().setValue(
+            self.log_text.verticalScrollBar().maximum()
+        )
+        
+    def on_processing_finished(self):
+        """处理完成的回调"""
+        # 停止线程
+        self.process_thread.quit()
+        self.process_thread.wait()
+        
+        # 重新启用按钮
+        self.submit_btn.setEnabled(True)
+        
+        # 显示完成消息
+        self.log_text.append("\n处理完成！")
+
     def update_theme(self, is_light):
         """更新主题样式"""
         self.setStyleSheet(self.light_style if is_light else self.dark_style)
@@ -418,53 +847,49 @@ class ImageProcessingWidget(QWidget):
             if widget.graphicsEffect():
                 widget.graphicsEffect().setColor(shadow_color)
         
-    def choose_input_folder(self):
-        folder = QFileDialog.getExistingDirectory(self, "Select Input Folder")
-        if folder:
-            self.input_entry.setText(folder)
-            
-    def choose_output_folder(self):
-        folder = QFileDialog.getExistingDirectory(self, "Select Output Folder")
-        if folder:
-            self.output_entry.setText(folder)
-            
-    def process_images(self):
-        input_folder = self.input_entry.text()
-        output_folder = self.output_entry.text()
-        
-        if not input_folder or not output_folder:
-            QMessageBox.warning(self, "Error", "Please select both input and output folders.")
-            return
-            
-        # Get background type (extract number from combo box text)
-        bg_type = self.bg_combo.currentText().split('.')[0]
-        
-        self.log_text.clear()
-        self.progress_bar.setValue(0)
-        self.submit_btn.setEnabled(False)
-        
-        # Create a QThread for processing
-        self.thread = QThread()
-        self.worker = ImageProcessor(input_folder, output_folder, bg_type)
-        self.worker.moveToThread(self.thread)
-        
-        # Connect signals
-        self.thread.started.connect(self.worker.run)
-        self.worker.progress.connect(self.update_progress)
-        self.worker.log.connect(self.update_log)
-        self.worker.finished.connect(self.thread.quit)
-        self.worker.finished.connect(self.worker.deleteLater)
-        self.thread.finished.connect(self.thread.deleteLater)
-        self.thread.finished.connect(lambda: self.submit_btn.setEnabled(True))
-        
-        # Start processing
-        self.thread.start()
-        
-    def update_progress(self, value):
-        self.progress_bar.setValue(value)
-        
-    def update_log(self, text):
-        self.log_text.append(text)
+        # 更新提交按钮样式
+        if not is_light:
+            self.submit_btn.setStyleSheet("""
+                QPushButton {
+                    background-color: #0071e3;
+                    color: white;
+                    border: none;
+                    border-radius: 6px;
+                    padding: 12px;
+                    font-size: 14px;
+                    font-weight: 500;
+                }
+                QPushButton:hover {
+                    background-color: #0077ed;
+                }
+                QPushButton:pressed {
+                    background-color: #006edb;
+                }
+                QPushButton:disabled {
+                    background-color: #666666;
+                }
+            """)
+        else:
+            self.submit_btn.setStyleSheet("""
+                QPushButton {
+                    background-color: #0071e3;
+                    color: white;
+                    border: none;
+                    border-radius: 6px;
+                    padding: 12px;
+                    font-size: 14px;
+                    font-weight: 500;
+                }
+                QPushButton:hover {
+                    background-color: #0077ed;
+                }
+                QPushButton:pressed {
+                    background-color: #006edb;
+                }
+                QPushButton:disabled {
+                    background-color: #999999;
+                }
+            """)
 
 class ImageProcessor(QObject):
     progress = pyqtSignal(int)
@@ -480,16 +905,47 @@ class ImageProcessor(QObject):
     def run(self):
         try:
             from Add_Background import process_images
+            import os
             
-            # Create a progress callback
+            # 检查输入文件夹是否存在
+            if not os.path.exists(self.input_folder):
+                raise FileNotFoundError(f"输入文件夹不存在: {self.input_folder}")
+                
+            # 检查输入文件夹是否包含图片
+            image_files = [f for f in os.listdir(self.input_folder) 
+                         if f.lower().endswith(('.png', '.jpg', '.jpeg', '.bmp', '.gif'))]
+            if not image_files:
+                raise ValueError(f"输入文件夹中没有找到图片文件: {self.input_folder}")
+                
+            # 检查输出文件夹是否可写
+            if not os.path.exists(self.output_folder):
+                try:
+                    os.makedirs(self.output_folder)
+                except Exception as e:
+                    raise PermissionError(f"无法创建输出文件夹: {self.output_folder}\n错误: {str(e)}")
+            elif not os.access(self.output_folder, os.W_OK):
+                raise PermissionError(f"输出文件夹没有写入权限: {self.output_folder}")
+                
+            # 检查输入和输出路径是否相同
+            if os.path.normpath(self.input_folder) == os.path.normpath(self.output_folder):
+                raise ValueError("输入和输出文件夹不能相同")
+                
+            self.log.emit("开始处理图片...")
+            self.log.emit(f"输入文件夹: {self.input_folder}")
+            self.log.emit(f"输出文件夹: {self.output_folder}")
+            self.log.emit(f"背景样式: {self.bg_type}")
+            self.log.emit(f"找到 {len(image_files)} 个图片文件")
+            self.log.emit("-------------------")
+            
+            # 创建进度回调
             def update_progress(value):
                 self.progress.emit(value)
                 
-            # Create a log callback
+            # 创建日志回调
             def update_log(text):
                 self.log.emit(text)
             
-            # Process images
+            # 处理图片
             process_images(
                 self.input_folder, 
                 self.output_folder,
@@ -498,20 +954,239 @@ class ImageProcessor(QObject):
                 log_callback=update_log
             )
             
+            self.log.emit("-------------------")
+            self.log.emit("处理完成！")
+            
+        except FileNotFoundError as e:
+            self.log.emit(f"错误: 文件未找到 - {str(e)}")
+        except PermissionError as e:
+            self.log.emit(f"错误: 权限不足 - {str(e)}")
+        except ValueError as e:
+            self.log.emit(f"错误: 参数无效 - {str(e)}")
         except Exception as e:
-            self.log.emit(f"Error: {str(e)}")
+            import traceback
+            error_details = traceback.format_exc()
+            self.log.emit(f"发生错误:\n{str(e)}\n\n详细信息:\n{error_details}")
         
         self.finished.emit()
+
+class LoadingScreen(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowFlags(Qt.WindowType.FramelessWindowHint | Qt.WindowType.WindowStaysOnTopHint)
+        self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
+        self.resize(400, 300)  # 缩小加载窗口的大小
+        self.setup_ui()
+
+    def setup_ui(self):
+        # 创建主布局
+        main_layout = QVBoxLayout(self)
+        main_layout.setContentsMargins(0, 0, 0, 0)
+        
+        # 创建内容容器
+        content_widget = QWidget()
+        content_widget.setStyleSheet("background: white; border-radius: 20px;")
+        content_layout = QVBoxLayout(content_widget)
+        content_layout.setContentsMargins(30, 30, 30, 30)  # 减小内边距
+        content_layout.setSpacing(20)  # 减小间距
+        
+        # 加载图标
+        icon_container = QWidget()
+        icon_layout = QVBoxLayout(icon_container)
+        icon_layout.setContentsMargins(0, 0, 0, 0)
+        icon_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        
+        icon_label = QLabel()
+        icon_path = os.path.join(os.path.dirname(__file__), "icon", "logo.ico")
+        if os.path.exists(icon_path):
+            pixmap = QPixmap(icon_path)
+            scaled_pixmap = pixmap.scaled(96, 96,  # 缩小图标大小
+                                        Qt.AspectRatioMode.KeepAspectRatio, 
+                                        Qt.TransformationMode.SmoothTransformation)
+            icon_label.setPixmap(scaled_pixmap)
+            icon_label.setFixedSize(96, 96)  # 缩小图标容器大小
+        
+        icon_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        icon_layout.addWidget(icon_label)
+        
+        # 为图标添加阴影效果
+        icon_shadow = QGraphicsDropShadowEffect()
+        icon_shadow.setBlurRadius(10)  # 减小阴影范围
+        icon_shadow.setXOffset(0)
+        icon_shadow.setYOffset(0)
+        icon_shadow.setColor(QColor(0, 0, 0, 50))
+        icon_label.setGraphicsEffect(icon_shadow)
+        
+        content_layout.addWidget(icon_container)
+
+        # 加载文本
+        self.loading_label = QLabel("正在初始化...")
+        self.loading_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.loading_label.setStyleSheet("color: #333333; font-size: 16px; margin: 10px; font-family: Microsoft YaHei")
+        content_layout.addWidget(self.loading_label)
+
+        # 进度条
+        progress_container = QWidget()
+        progress_layout = QVBoxLayout(progress_container)
+        progress_layout.setContentsMargins(0, 0, 0, 0)
+        progress_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        
+        self.progress = QProgressBar()
+        self.progress.setRange(0, 0)
+        self.progress.setFixedSize(200, 4)  # 缩小进度条
+        self.progress.setTextVisible(False)
+        self.progress.setStyleSheet("""
+            QProgressBar {
+                border: none;
+                background: #E0E0E0;
+                border-radius: 2px;
+            }
+            QProgressBar::chunk {
+                background: #007AFF;
+                border-radius: 2px;
+            }
+        """)
+        progress_layout.addWidget(self.progress)
+        content_layout.addWidget(progress_container)
+
+        # 添加内容容器到主布局
+        main_layout.addWidget(content_widget)
+
+        # 添加阴影效果
+        shadow = QGraphicsDropShadowEffect()
+        shadow.setBlurRadius(20)  # 减小阴影范围
+        shadow.setXOffset(0)
+        shadow.setYOffset(0)
+        shadow.setColor(QColor(0, 0, 0, 40))
+        content_widget.setGraphicsEffect(shadow)
+
+    def center(self):
+        """将窗口居中显示"""
+        screen = QApplication.primaryScreen().geometry()
+        size = self.geometry()
+        self.move(
+            (screen.width() - size.width()) // 2,
+            (screen.height() - size.height()) // 2
+        )
+
+    def update_theme(self, is_dark):
+        """更新主题"""
+        if is_dark:
+            self.findChild(QWidget).setStyleSheet("background: #2D2D2D; border-radius: 20px;")
+            self.loading_label.setStyleSheet("color: #FFFFFF; font-size: 16px; margin: 10px; font-family: Microsoft YaHei")
+        else:
+            self.findChild(QWidget).setStyleSheet("background: white; border-radius: 20px;")
+            self.loading_label.setStyleSheet("color: #333333; font-size: 16px; margin: 10px; font-family: Microsoft YaHei")
+
+class ModelLoadThread(QThread):
+    finished = pyqtSignal(bool)  # True表示成功，False表示失败
+    status_update = pyqtSignal(str)
+    error_occurred = pyqtSignal(str)  # 新增错误信号
+
+    def run(self):
+        try:
+            self.status_update.emit("正在初始化...")
+            import Classifierpy
+            success = Classifierpy.initialize_model(self.status_update.emit)
+            if not success:
+                self.error_occurred.emit("模型初始化失败")
+                self.finished.emit(False)
+                return
+            self.finished.emit(True)
+        except Exception as e:
+            import traceback
+            error_msg = f"错误: {str(e)}\n{traceback.format_exc()}"
+            print(error_msg)  # 打印到控制台
+            self.error_occurred.emit(error_msg)
+            self.finished.emit(False)
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle('LumoSort')
-        self.resize(800, 600)
-        self.setMinimumSize(400, 300)
-        icon_path = os.path.join(os.path.dirname(__file__), "icon", "logo.ico")
-        self.setWindowIcon(QIcon(icon_path))
+        try:
+            # 创建加载界面
+            self.loading_screen = LoadingScreen()
+            self.loading_screen.center()
+            self.loading_screen.show()
 
+            # 启动模型加载线程
+            self.load_thread = ModelLoadThread()
+            self.load_thread.finished.connect(self.on_model_loaded)
+            self.load_thread.status_update.connect(self.loading_screen.loading_label.setText)
+            self.load_thread.error_occurred.connect(self.on_error)
+            self.load_thread.start()
+
+            # 延迟初始化主窗口
+            self.init_started = False
+            
+            # 设置窗口大小和位置
+            self.resize(960, 720)
+            self.setMinimumSize(400, 300)
+            
+            # 居中显示窗口
+            screen = QApplication.primaryScreen().geometry()
+            size = self.geometry()
+            self.move(
+                (screen.width() - size.width()) // 2,
+                (screen.height() - size.height()) // 2
+            )
+        except Exception as e:
+            import traceback
+            print(f"初始化错误: {str(e)}\n{traceback.format_exc()}")
+            QMessageBox.critical(None, "错误", f"程序初始化失败: {str(e)}")
+            sys.exit(1)
+
+    def on_error(self, error_msg):
+        """处理错误信息"""
+        print(f"发生错误: {error_msg}")  # 打印到控制台
+        # 确保错误消息框在主线程中显示
+        QTimer.singleShot(0, lambda: QMessageBox.critical(self.loading_screen, "错误", error_msg))
+
+    def on_model_loaded(self, success):
+        try:
+            if not self.init_started:
+                self.init_started = True
+                if success:
+                    print("模型加载成功，开始初始化UI...")
+                    self.setWindowTitle('LumoSort')
+                    
+                    self._window_icon = None
+                    self._init_window_icon()
+
+                    self.current_lang = 'en'
+                    self.status_mode = 'ready'
+                    self.categories = {}
+                    self.current_images = []
+                    self.current_index = 0
+                    self._flash_on = True
+                    self.pixel_font = "Courier New"
+                    
+                    print("开始设置UI组件...")
+                    # 初始化UI组件
+                    self.setup_basic_ui()
+                    print("基础UI设置完成...")
+                    
+                    # 关闭加载界面并显示主窗口
+                    self.loading_screen.close()
+                    self.show()
+                    print("主窗口显示完成...")
+                else:
+                    print("模型加载失败...")
+                    QMessageBox.critical(self.loading_screen, "错误", "模型加载失败，请检查文件完整性。")
+                    sys.exit(1)
+        except Exception as e:
+            import traceback
+            error_msg = f"UI初始化错误: {str(e)}\n{traceback.format_exc()}"
+            print(error_msg)
+            QMessageBox.critical(self.loading_screen, "错误", error_msg)
+            sys.exit(1)
+
+    def _init_window_icon(self):
+        icon_path = os.path.join(os.path.dirname(__file__), "icon", "logo.ico")
+        if os.path.exists(icon_path):
+            self.setWindowIcon(QIcon(icon_path))
+
+    def setup_basic_ui(self):
         self.current_lang = 'en'
         self.status_mode = 'ready'
         self.categories = {}
@@ -532,6 +1207,19 @@ class MainWindow(QMainWindow):
         sidebar = QWidget()
         sb_layout = QVBoxLayout(sidebar)
 
+        # Home按钮
+        self.home_btn = QPushButton()
+        self.home_btn.setMinimumHeight(48)
+        self.home_btn.setStyleSheet(self._upload_button_style(dark=False))
+        self.home_btn.clicked.connect(self.on_home)
+        
+        # Home按钮的阴影
+        home_shadow = QGraphicsDropShadowEffect(self.home_btn)
+        home_shadow.setBlurRadius(15)
+        home_shadow.setOffset(0, 3)
+        home_shadow.setColor(QColor(0, 0, 0, 80))
+        self.home_btn.setGraphicsEffect(home_shadow)
+
         # 上传按钮
         self.upload_btn = QPushButton()
         self.upload_btn.setText(TEXTS[self.current_lang]['upload'])
@@ -547,7 +1235,7 @@ class MainWindow(QMainWindow):
         self.upload_btn.setGraphicsEffect(shadow)
 
         # Tools按钮
-        self.tools_btn = QPushButton("Tools")
+        self.tools_btn = QPushButton()
         self.tools_btn.setMinimumHeight(48)
         self.tools_btn.setStyleSheet(self._upload_button_style(dark=False))
         self.tools_btn.clicked.connect(self.on_tools)
@@ -559,18 +1247,18 @@ class MainWindow(QMainWindow):
         tools_shadow.setColor(QColor(0, 0, 0, 80))
         self.tools_btn.setGraphicsEffect(tools_shadow)
 
-        # 返回主页按钮
-        self.home_btn = QPushButton("Home")
-        self.home_btn.setMinimumHeight(48)
-        self.home_btn.setStyleSheet(self._upload_button_style(dark=False))
-        self.home_btn.clicked.connect(self.on_home)
+        # 已分类按钮
+        self.classified_btn = QPushButton()
+        self.classified_btn.setMinimumHeight(48)
+        self.classified_btn.setStyleSheet(self._upload_button_style(dark=False))
+        self.classified_btn.clicked.connect(self.on_show_classified)
         
-        # Home按钮的阴影
-        home_shadow = QGraphicsDropShadowEffect(self.home_btn)
-        home_shadow.setBlurRadius(15)
-        home_shadow.setOffset(0, 3)
-        home_shadow.setColor(QColor(0, 0, 0, 80))
-        self.home_btn.setGraphicsEffect(home_shadow)
+        # 已分类按钮的阴影
+        classified_shadow = QGraphicsDropShadowEffect(self.classified_btn)
+        classified_shadow.setBlurRadius(15)
+        classified_shadow.setOffset(0, 3)
+        classified_shadow.setColor(QColor(0, 0, 0, 80))
+        self.classified_btn.setGraphicsEffect(classified_shadow)
 
         self.dark_chk = QCheckBox()
         self.dark_chk.toggled.connect(self.toggle_theme)
@@ -604,9 +1292,10 @@ class MainWindow(QMainWindow):
         status_layout.addWidget(self.status_lbl)
         status_layout.addStretch()
 
+        sb_layout.addWidget(self.home_btn)
         sb_layout.addWidget(self.upload_btn)
         sb_layout.addWidget(self.tools_btn)
-        sb_layout.addWidget(self.home_btn)
+        sb_layout.addWidget(self.classified_btn)
         sb_layout.addWidget(self.dark_chk)
         sb_layout.addWidget(self.lang_combo)
         sb_layout.addStretch()
@@ -616,6 +1305,47 @@ class MainWindow(QMainWindow):
 
         # 创建主要内容区域的堆叠窗口
         self.main_stack = QStackedWidget()
+        
+        # 添加加载页面
+        self.loading_page = QWidget()
+        loading_layout = QVBoxLayout(self.loading_page)
+        loading_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        
+        # 加载动画容器
+        loading_container = QWidget()
+        loading_container.setFixedSize(300, 200)
+        loading_container.setStyleSheet("background-color: white; border-radius: 20px;")
+        
+        # 加载容器布局
+        loading_container_layout = QVBoxLayout(loading_container)
+        loading_container_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        
+        # 加载进度条
+        self.loading_progress = QProgressBar()
+        self.loading_progress.setRange(0, 0)  # 设置为循环模式
+        self.loading_progress.setFixedSize(200, 4)
+        self.loading_progress.setTextVisible(False)
+        self.loading_progress.setStyleSheet("QProgressBar {border: none; background: #E0E0E0; border-radius: 2px;} QProgressBar::chunk {background: #007AFF; border-radius: 2px;}")
+        
+        # 加载文本
+        self.loading_label = QLabel("正在加载分类...")
+        self.loading_label.setStyleSheet("color: #333333; font-size: 16px; margin-top: 15px;")
+        
+        loading_container_layout.addWidget(self.loading_progress)
+        loading_container_layout.addWidget(self.loading_label)
+        
+        # 添加阴影效果
+        container_shadow = QGraphicsDropShadowEffect()
+        container_shadow.setBlurRadius(20)
+        container_shadow.setXOffset(0)
+        container_shadow.setYOffset(2)
+        container_shadow.setColor(QColor(0, 0, 0, 40))
+        loading_container.setGraphicsEffect(container_shadow)
+        
+        loading_layout.addWidget(loading_container)
+        
+        # 将加载页面添加到主堆叠窗口
+        self.main_stack.addWidget(self.loading_page)
         
         # 分类功能页面
         self.classifier_widget = QStackedWidget()
@@ -849,15 +1579,57 @@ class MainWindow(QMainWindow):
         self.status_light.setStyleSheet(f"border-radius: 6px; background-color: {color};")
 
     def update_texts(self):
+        """更新所有界面文本"""
         t = TEXTS[self.current_lang]
+        # 欢迎页面
         self.welcome_lbl.restart(t['welcome'])
         self.welcome_lbl.setText(t['welcome'])
+        
+        # 按钮文本
         self.upload_btn.setText(t['upload'])
-        self.dark_chk.setText(t['dark'])
+        self.home_btn.setText(t['home'])
+        self.tools_btn.setText(t['tools'])
+        self.classified_btn.setText(t['classified'])
+        self.dark_chk.setText(t['dark'] if not self.dark_chk.isChecked() else t['light'])
+        
+        # 返回按钮
         self.back_btn.setText(t['back'])
         self.back2_btn.setText(t['back'])
         self.back_to_categories_btn.setText(t['back'])
 
+        # 工具页面
+        if hasattr(self, 'tools_page'):
+            self.tools_page.setWindowTitle(t['processing'])
+            input_group = self.tools_page.findChild(QGroupBox, "input_group")
+            if input_group:
+                input_group.setTitle(t['input_folder'])
+            output_group = self.tools_page.findChild(QGroupBox, "output_group")
+            if output_group:
+                output_group.setTitle(t['output_folder'])
+            bg_group = self.tools_page.findChild(QGroupBox, "bg_group")
+            if bg_group:
+                bg_group.setTitle(t['background_style'])
+            log_group = self.tools_page.findChild(QGroupBox, "log_group")
+            if log_group:
+                log_group.setTitle(t['processing_log'])
+            
+            # 更新按钮文本
+            browse_buttons = self.tools_page.findChildren(QPushButton)
+            for btn in browse_buttons:
+                if btn.text() == "Browse":
+                    btn.setText(t['browse'])
+                elif btn.text() == "Process Images":
+                    btn.setText(t['process_images'])
+            
+            # 更新下拉框选项
+            bg_combo = self.tools_page.findChild(QComboBox)
+            if bg_combo:
+                current_index = bg_combo.currentIndex()
+                bg_combo.clear()
+                bg_combo.addItems(t['bg_styles'])
+                bg_combo.setCurrentIndex(current_index)
+
+        # 状态文本
         if self.status_mode == 'ready':
             self.set_status('ready', t['ready'])
         elif self.status_mode == 'classifying':
@@ -869,24 +1641,44 @@ class MainWindow(QMainWindow):
         codes = ['en', 'zh', 'zh-tw', 'ja', 'fr', 'ko', 'ru', 'ar', 'es', 'de']
         self.current_lang = codes[index]
         self.update_texts()
+        # 更新工具页面的文本
+        if hasattr(self, 'tools_page'):
+            self.tools_page.update_texts(self.current_lang)
 
     def toggle_theme(self, checked):
         app = QApplication.instance()
-        pal = app.palette()
+        pal = QPalette()
         t = TEXTS[self.current_lang]
         if checked:
+            # 深色主题
             pal.setColor(QPalette.ColorRole.Window, QColor(45, 45, 45))
             pal.setColor(QPalette.ColorRole.WindowText, QColor('white'))
+            pal.setColor(QPalette.ColorRole.Base, QColor(30, 30, 30))
+            pal.setColor(QPalette.ColorRole.AlternateBase, QColor(50, 50, 50))
+            pal.setColor(QPalette.ColorRole.Text, QColor('white'))
+            pal.setColor(QPalette.ColorRole.Button, QColor(45, 45, 45))
+            pal.setColor(QPalette.ColorRole.ButtonText, QColor('white'))
             self.upload_btn.setStyleSheet(self._upload_button_style(dark=True))
             self.dark_chk.setText(t['light'])
-            # 更新Tools页面主题
             self.tools_page.update_theme(False)
+            # 更新加载页面的样式
+            self.loading_page.findChild(QWidget).setStyleSheet("background-color: #2D2D2D; border-radius: 20px;")
+            self.loading_label.setStyleSheet("color: #FFFFFF; font-size: 16px; margin-top: 15px;")
         else:
-            pal = app._default_palette
+            # 浅色主题
+            pal.setColor(QPalette.ColorRole.Window, QColor(240, 240, 240))
+            pal.setColor(QPalette.ColorRole.WindowText, QColor('black'))
+            pal.setColor(QPalette.ColorRole.Base, QColor('white'))
+            pal.setColor(QPalette.ColorRole.AlternateBase, QColor(245, 245, 245))
+            pal.setColor(QPalette.ColorRole.Text, QColor('black'))
+            pal.setColor(QPalette.ColorRole.Button, QColor(240, 240, 240))
+            pal.setColor(QPalette.ColorRole.ButtonText, QColor('black'))
             self.upload_btn.setStyleSheet(self._upload_button_style(dark=False))
             self.dark_chk.setText(t['dark'])
-            # 更新Tools页面主题
             self.tools_page.update_theme(True)
+            # 更新加载页面的样式
+            self.loading_page.findChild(QWidget).setStyleSheet("background-color: white; border-radius: 20px;")
+            self.loading_label.setStyleSheet("color: #333333; font-size: 16px; margin-top: 15px;")
         app.setPalette(pal)
 
     def on_classified(self, result):
@@ -995,6 +1787,51 @@ class MainWindow(QMainWindow):
         else:
             self.classifier_widget.setCurrentWidget(self.welcome_page)
         self.main_stack.setCurrentWidget(self.classifier_widget)
+
+    def on_show_classified(self):
+        """显示已分类的图片"""
+        # 首先显示加载页面
+        self.main_stack.setCurrentWidget(self.loading_page)
+        self.loading_label.setText(TEXTS[self.current_lang]['loading_categories'])
+        
+        # 使用QTimer延迟执行加载操作，让加载页面有时间显示
+        QTimer.singleShot(100, self._load_classified_images)
+    
+    def _load_classified_images(self):
+        """实际加载分类图片的操作"""
+        if self._check_classified_images():
+            # 如果有已分类的图片，加载并显示
+            self.load_categories()
+            self.main_stack.setCurrentWidget(self.classifier_widget)
+            self.classifier_widget.setCurrentWidget(self.cat_page)
+        else:
+            # 如果没有已分类的图片，显示提示信息
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Icon.Information)
+            msg.setWindowTitle(TEXTS[self.current_lang]['error'])
+            msg.setText(TEXTS[self.current_lang]['no_images'])
+            msg.setInformativeText(TEXTS[self.current_lang]['no_images_desc'])
+            msg.setStandardButtons(QMessageBox.StandardButton.Ok)
+            msg.exec()
+            # 返回主页
+            self.main_stack.setCurrentWidget(self.classifier_widget)
+            self.classifier_widget.setCurrentWidget(self.welcome_page)
+
+    def setup_tools_page(self):
+        """设置工具页面"""
+        self.tools_page = ImageProcessingWidget()
+        input_group = self.tools_page.findChild(QGroupBox, "input_group")
+        if input_group:
+            input_group.setObjectName("input_group")
+        output_group = self.tools_page.findChild(QGroupBox, "output_group")
+        if output_group:
+            output_group.setObjectName("output_group")
+        bg_group = self.tools_page.findChild(QGroupBox, "bg_group")
+        if bg_group:
+            bg_group.setObjectName("bg_group")
+        log_group = self.tools_page.findChild(QGroupBox, "log_group")
+        if log_group:
+            log_group.setObjectName("log_group")
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
