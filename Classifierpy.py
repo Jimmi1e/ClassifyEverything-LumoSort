@@ -10,7 +10,12 @@ if getattr(sys, 'frozen', False):
 else:
     base_path = os.path.dirname(__file__)
 
-st.BPE_PATH = os.path.join(base_path, "clip_vocab", "bpe_simple_vocab_16e6.txt.gz")
+def resource_path(relative_path):
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, relative_path)
+    return os.path.join(os.path.abspath("."), relative_path)
+
+st.BPE_PATH = resource_path("clip_vocab/bpe_simple_vocab_16e6.txt.gz")
 
 from clip import clip
 from labels import CLIP_LABELS, LABEL_DISPLAY

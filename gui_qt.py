@@ -17,6 +17,11 @@ from PyQt6.QtCore import Qt, QThread, pyqtSignal, QSize, QTimer, QObject
 # 移除直接导入
 # import Classifierpy as Classifier
 
+def resource_path(relative_path):
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, relative_path)
+    return os.path.join(os.path.abspath("."), relative_path)
+
 class ScaledPreview(QLabel):
     def __init__(self):
         super().__init__()
@@ -997,7 +1002,7 @@ class LoadingScreen(QWidget):
         icon_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
         
         icon_label = QLabel()
-        icon_path = os.path.join(os.path.dirname(__file__), "icon", "logo.png")
+        icon_path = resource_path("icon/logo.png")
         if os.path.exists(icon_path):
             pixmap = QPixmap(icon_path)
             scaled_pixmap = pixmap.scaled(200, 200,  # 增加图标大小

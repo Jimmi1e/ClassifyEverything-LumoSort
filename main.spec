@@ -5,7 +5,12 @@ a = Analysis(
     ['main.py'],
     pathex=[],
     binaries=[],
-    datas=[('models/ViT-B-32.pt', 'models'), ('clip_vocab/bpe_simple_vocab_16e6.txt.gz', 'clip')],
+    datas=[
+        ('models/ViT-B-32.pt', 'models'),
+        ('clip_vocab/bpe_simple_vocab_16e6.txt.gz', 'clip_vocab'),
+        ('clip/bpe_simple_vocab_16e6.txt.gz', 'clip'),
+        ('icon/logo.png', 'icon')
+    ],
     hiddenimports=['clip.simple_tokenizer'],
     hookspath=[],
     hooksconfig={},
@@ -22,7 +27,7 @@ exe = EXE(
     a.binaries,
     a.datas,
     [],
-    name='main',
+    name='LumoSort',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
@@ -35,5 +40,5 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon=['icon\\icon.ico'],
+    icon=['icon\\logo.ico'],
 )

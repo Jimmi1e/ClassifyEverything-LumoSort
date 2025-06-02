@@ -1,0 +1,1 @@
+https://openaipublic.blob.core.windows.net/clip/bpe_simple_vocab_16e6.txt.gz

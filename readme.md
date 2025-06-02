@@ -93,7 +93,8 @@ Due to GitHub file size restrictions, two required files must be downloaded manu
 ### 2. Tokenizer Vocabulary: `bpe_simple_vocab_16e6.txt.gz`
 
 * 🔗 [Download bpe_simple_vocab_16e6.txt.gz](https://openaipublic.blob.core.windows.net/clip/bpe_simple_vocab_16e6.txt.gz)
-* 📁 Place in: `clip_vocab/bpe_simple_vocab_16e6.txt.gz`
+* 📁 Place in: `clip/bpe_simple_vocab_16e6.txt.gz`
+* (See `clip/download_Vocabulary.txt` for the link)
 
 ---
 
@@ -109,7 +110,7 @@ LumoSort/
 │   └── logo.ico         # Application icon
 ├── models/
 │   └── ViT-B-32.pt     # <- manual download
-├── clip_vocab/
+├── clip/
 │   └── bpe_simple_vocab_16e6.txt.gz  # <- manual download
 ├── requirements.txt     # Dependencies
 └── ...
@@ -127,9 +128,14 @@ conda activate lumosort
 # Install dependencies
 pip install -r requirements.txt
 
-# Launch the application
+# Run the main program
 python main.py
 ```
+
+### Pre-built Executable
+
+The pre-built Windows executable (`LumoSort.exe`) is available on the [Releases](https://github.com/your-repo/releases) page.  
+**Note:** You still need to manually download `bpe_simple_vocab_16e6.txt.gz` and place it in the `clip` folder.
 
 ---
 
@@ -139,7 +145,7 @@ python main.py
 pyinstaller main.py --onefile \
   --icon=icon/logo.ico \
   --add-data "models/ViT-B-32.pt;models" \
-  --add-data "clip_vocab/bpe_simple_vocab_16e6.txt.gz;clip_vocab"
+  --add-data "clip/bpe_simple_vocab_16e6.txt.gz;clip"
 ```
 
 Ensure `sys._MEIPASS` is handled properly when accessing resources inside your code (e.g., tokenizer path).
@@ -165,4 +171,7 @@ If you use LumoSort or its components (UI, classifier design, or visuals) as par
 > "Based on [LumoSort](https://github.com/Jimmi1e/LumoSort) by @Jimmi1e"
 
 This helps support the original author and gives proper credit. Thank you!
+
+# Make sure clip/bpe_simple_vocab_16e6.txt.gz exists
+pyinstaller main.spec --clean --noconfirm
 
