@@ -1,6 +1,18 @@
 # 🌟 LumoSort — A Semantic-Aware Photo Organizer for Creators
 
-
+<div align="center">
+  <p>
+    <a href="https://github.com/Jimmi1e/LumoSort/releases">
+      <img src="https://img.shields.io/badge/version-1.0.2-blue.svg" alt="version"/>
+    </a>
+    <a href="LICENSE">
+      <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="license"/>
+    </a>
+    <a href="https://www.python.org/downloads/release/python-3100/">
+      <img src="https://img.shields.io/badge/python-3.10-blue.svg" alt="python"/>
+    </a>
+  </p>
+</div>
 
 ## 🎬 Background
 
@@ -24,12 +36,30 @@ If you're based in mainland China, please use the Baidu NetDisk link below:
 - [Baidu NetDisk: LumoSort.exe](https://pan.baidu.com/s/1t4fvGvutQemTQ0fstptRtw?pwd=6qym)  
   提取码：`6qym`
 
-## ✨ Preface
+## ✨ Features
+
 **LumoSort** is a desktop application that helps you automatically classify and organize your photo collections into semantic categories such as *Portrait*, *Street*, *Architecture*, *Food*, and more.
 
-Built with **OpenAI CLIP** and **PyQt6**, it features a modern animated UI, multilingual support, and local image classification.
+Built with **OpenAI CLIP** and **PyQt6**, it features:
 
-![screenshot](icon/screenshot.png)
+- 🎨 Modern animated UI with Light/Dark mode
+- 🌐 Multilingual support (10+ languages)
+- 🤖 Local image classification
+- 📱 Responsive design
+- 🖼️ Background processing tools
+
+### 📸 Screenshots
+
+<div align="center">
+  <img src="icon/screen3.png" alt="Main Interface" width="800"/>
+  <p><em>Main Interface - Dark Mode</em></p>
+  
+  <img src="icon/screen1.png" alt="Category View" width="800"/>
+  <p><em>Category View with Image Classification</em></p>
+  
+  <img src="icon/screen2.png" alt="Tools Interface" width="800"/>
+  <p><em>Tools Interface - Background Processing</em></p>
+</div>
 
 ---
 
@@ -37,15 +67,17 @@ Built with **OpenAI CLIP** and **PyQt6**, it features a modern animated UI, mult
 
 LumoSort uses OpenAI's [CLIP](https://github.com/openai/CLIP) model to classify images by comparing them with a list of text prompts describing various categories. The model computes similarity scores between image and text embeddings and selects the most likely label.
 
-* Uses `ViT-B/32`, a Vision Transformer-based CLIP model
-* Includes 20+ categories like `Portrait`, `Food`, `Street`, `Library`, `Nature`, etc.
-* Automatically groups and copies images into corresponding folders
-* Includes a PyQt6 GUI with:
+### Key Features
 
-  * Light/Dark mode
-  * Real-time progress
-  * Grid-based album view and individual preview mode
-  * Multilingual interface
+* 🧠 Uses `ViT-B/32`, a Vision Transformer-based CLIP model
+* 📂 Includes 20+ categories like `Portrait`, `Food`, `Street`, `Library`, `Nature`, etc.
+* 🔄 Automatically groups and copies images into corresponding folders
+* 💻 Modern PyQt6 GUI with:
+  * 🌓 Light/Dark mode support
+  * ⏳ Real-time progress tracking
+  * 🎯 Grid-based album view
+  * 🔍 Individual preview mode
+  * 🌍 Multilingual interface
 
 ---
 
@@ -60,26 +92,26 @@ Due to GitHub file size restrictions, two required files must be downloaded manu
 
 ### 2. Tokenizer Vocabulary: `bpe_simple_vocab_16e6.txt.gz`
 
-* 🔗 [Download bpe\_simple\_vocab\_16e6.txt.gz](https://openaipublic.blob.core.windows.net/clip/bpe_simple_vocab_16e6.txt.gz)
+* 🔗 [Download bpe_simple_vocab_16e6.txt.gz](https://openaipublic.blob.core.windows.net/clip/bpe_simple_vocab_16e6.txt.gz)
 * 📁 Place in: `clip_vocab/bpe_simple_vocab_16e6.txt.gz`
 
 ---
 
 ## 📁 Directory Structure
 
-```
+```bash
 LumoSort/
-├── main.py
-├── gui_qt.py
-├── Classifierpy.py
-├── labels.py
+├── main.py               # Application entry point
+├── gui_qt.py            # Main GUI implementation
+├── Classifierpy.py      # CLIP classifier logic
+├── labels.py            # Category definitions
 ├── icon/
-│   └── icon.ico
+│   └── logo.ico         # Application icon
 ├── models/
-│   └── ViT-B-32.pt             # <- manual download
+│   └── ViT-B-32.pt     # <- manual download
 ├── clip_vocab/
 │   └── bpe_simple_vocab_16e6.txt.gz  # <- manual download
-├── requirements.txt
+├── requirements.txt     # Dependencies
 └── ...
 ```
 
@@ -105,18 +137,24 @@ python main.py
 
 ```bash
 pyinstaller main.py --onefile \
-  --icon=icon/icon.ico \
+  --icon=icon/logo.ico \
   --add-data "models/ViT-B-32.pt;models" \
   --add-data "clip_vocab/bpe_simple_vocab_16e6.txt.gz;clip_vocab"
 ```
 
-Ensure `sys._MEIPASS` is handled properly when accessing resources inside your code (e.g., tokenizer path).
+> 💡 Ensure `sys._MEIPASS` is handled properly when accessing resources inside your code (e.g., tokenizer path).
 
 ---
 
 ## 👤 Author
 
 Created by Jiaxi Yang
+
+## 🙏 Acknowledgments
+
+Special thanks to:
+- [Photo_background](https://github.com/waterkingest/Photo_background) by @waterkingest for providing inspiration for the background processing features
+- The open-source community for their invaluable tools and libraries
 
 ## 📄 License & Attribution
 

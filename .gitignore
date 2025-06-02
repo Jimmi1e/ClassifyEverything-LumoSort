@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Virtual environments
+venv/
+env/
+.env/
+
+# IDE
+.vscode/
+.idea/
+
+# Model files (need to be downloaded separately)
+models/ViT-B-32.pt
+clip_vocab/bpe_simple_vocab_16e6.txt.gz
+
+# Misc
+.DS_Store
+Thumbs.db 
