@@ -18,6 +18,59 @@
 
 I'm an amateur photographer and a Master's student in Electrical & Computer Engineering at **Concordia University**. In my daily photography, I rarely sort my photos into categories, which led to thousands of disorganized images. 📷🗂️ To solve this, I developed LumoSort, an application that can automatically organize my photo library by semantic categories.
 
+## 🌈 Versatility - Beyond Photography
+
+### 🔥 Important Note: Multi-Purpose Visual Classification Tool
+
+While LumoSort was initially designed for photography organization, it's actually a versatile visual classification tool that can be adapted for various visual tasks, such as:
+
+- 🌸 Flower species classification
+- 🐾 Animal categorization
+- 🦜 Fine-grained bird species identification
+- 🎨 Art style classification
+- 📦 Product categorization
+- And many more!
+
+To adapt LumoSort for your specific classification needs, you can simply modify the `labels.py` file to include your desired categories. The powerful CLIP model behind LumoSort can handle a wide range of visual classification tasks with impressive accuracy!
+
+### 🌺 Example: Flower Classification
+
+Here's an example of how you could modify `labels.py` for flower classification:
+
+```python
+CLIP_LABELS = [
+    "A photo of an iris flower",
+    "A photo of a rose flower",
+    "A photo of a tulip flower",
+    "A photo of a sunflower",
+    "A photo of a bluebell flower",
+    "A photo of a dahlia flower",
+    "A photo of cherry blossoms",
+    "A photo of an orchid",
+    "A photo of a lily flower",
+    "A photo of a chrysanthemum flower",
+    "A photo of a lotus flower",
+    "A photo of a peony flower",
+]
+
+LABEL_DISPLAY = {
+    "A photo of an iris flower": "Iris",
+    "A photo of a rose flower": "Rose",
+    "A photo of a tulip flower": "Tulip",
+    "A photo of a sunflower": "Sunflower",
+    "A photo of a bluebell flower": "Bluebell",
+    "A photo of a dahlia flower": "Dahlia",
+    "A photo of cherry blossoms": "Cherry Blossom",
+    "A photo of an orchid": "Orchid",
+    "A photo of a lily flower": "Lily",
+    "A photo of a chrysanthemum flower": "Chrysanthemum",
+    "A photo of a lotus flower": "Lotus",
+    "A photo of a peony flower": "Peony",
+}
+```
+
+Each category follows the "A photo of..." format for CLIP labels, with simplified display names. You can follow this pattern to create your own classification categories!
+
 ## 🔗 Download (for Windows)
 
 To support users in different regions, here are alternative download mirrors for the `LumoSort.exe` executable :
