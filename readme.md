@@ -142,7 +142,7 @@ pyinstaller main.py --onefile \
   --add-data "clip_vocab/bpe_simple_vocab_16e6.txt.gz;clip_vocab"
 ```
 
-> 💡 Ensure `sys._MEIPASS` is handled properly when accessing resources inside your code (e.g., tokenizer path).
+Ensure `sys._MEIPASS` is handled properly when accessing resources inside your code (e.g., tokenizer path).
 
 ---
 
