@@ -3,7 +3,7 @@
 <div align="center">
   <p>
     <a href="https://github.com/Jimmi1e/LumoSort/releases">
-      <img src="https://img.shields.io/badge/version-1.0.2-blue.svg" alt="version"/>
+      <img src="https://img.shields.io/badge/version-1.1.0-blue.svg" alt="version"/>
     </a>
     <a href="LICENSE">
       <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="license"/>
