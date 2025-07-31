@@ -16,7 +16,7 @@
 
 ## 🎬 Background
 
-I'm an amateur photographer and a Master's student in Electrical & Computer Engineering at **Concordia University**. Initially developed for organizing my photo library, LumoSort has evolved into a powerful universal visual classification tool. Thanks to the robust CLIP model, it can classify not just photos, but virtually any visual content into semantic categories. 🎯✨
+I'm an amateur photographer and a Master's student in Electrical & Computer Engineering at **Concordia University**. Initially developed for competition, LumoSort has evolved into a powerful universal visual classification tool. Thanks to the robust CLIP model, it can classify not just photos, but virtually any visual content into semantic categories. 🎯✨
 
 Whether you're dealing with photographs, artwork, scientific images, or any other visual data, LumoSort can help you organize them intelligently. The system is highly adaptable - simply modify the categories in `labels.py` to suit your specific classification needs!
 
